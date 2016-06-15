@@ -1,0 +1,72 @@
+body{
+	z-index: 1;
+}
+.editorBody{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	max-height: 100%;
+	z-index: 2;
+}
+.gridHolder{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	max-height: 100%;
+	z-index: 2;	
+}
+.editorStripe{
+  position: fixed;
+  left: 100px;
+  right: 100px;
+  top: 0px;
+  height: 100vh;
+  width: auto;
+  background-color: pink; 
+  opacity: 0.5;
+  z-index: 2;
+}
+.editor{
+	position: absolute;
+	top: 30%;
+	left: 30%;
+	width: 200px;
+	height: auto;
+	background-color: gray;
+	opacity: 0.8;
+	padding: 10px;
+	z-index: 1000000 !important;
+}
+.editor > a, .editor> a:hover, .editor > a:active{
+	text-decoration: none;
+	color: black;
+}
+.editor> input[type="text"]{
+}
+
+
+.editorLineHorizontal{
+  position: fixed;
+  top: 10px;
+  left: 0px;
+  background-color: blue;
+  width: 100vw;
+  height: 4px;
+  z-index: 100000 !important;
+}
+
+.editorLineVertical{
+  position: fixed;
+  top: 0px;
+  left: 10px;
+  background-color: blue;
+  width: 2px;
+  height: 100vh;
+  z-index: 100000 !important;
+}
