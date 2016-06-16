@@ -52,13 +52,10 @@ var editor = {
 									"<p>Set height <input type='text' value='100' id='editorStripeHeight'/></p>"+
 									"<p>*Note, 100 = 1 screen height, 200 = 2, etc.</p>"+
 									"<p>Set color <input type='text' value='pink' id='editorStripeColor'/></p>"+
-									"<p>*Put here color name 'pink' or code '#ffbf00'.</p>");
-									
-				/*Dividers*/					
-                $(".editor").append("<hr/><div><h4>Dividers <span class='editorview'>[click to colapse]</span></h4><p><input type='button' "+
-				                    "id='editorDividerCrossScreen' value='cross screen'><input type='button' id='editorDividerX' value='cross "+
-									"screen diagonal'><input type='button' id='editorRemoveAllDividers' value='remove all dividers'></p></div>");
-            
+									"<p>*Put here color name 'pink' or code '#ffbf00'.</p>"+
+									"<form id='editorStripeMeasureForm'>"+
+                                    "<input type='radio' name='editorStripeMeasure' value='px' /> px <br />"+
+                                    "<input type='radio' name='editorStripeMeasure' value='%' /> % <br /></form>");            
         },
 		
 		/*Grid begine*/
@@ -71,7 +68,7 @@ var editor = {
                 "background-size" : "100px "+editor.model.grid.width+"px, "+editor.model.grid.width+"px 100px, 10px 10px, 10px 10px",
                 "background-position" : "-2px -2px, -2px -2px, -1px -1px, -1px -1px"			
 			});
-		},//100px 50px, 50px 100px, 10px 10px, 10px 10px    editor.model.grid.width
+		},
 		
 		removeGrid: function(){
 			$(".gridHolder").remove();
@@ -91,8 +88,8 @@ var editor = {
 		
 		reDrawStripe: function(){
 			$(".editorStripe").css({
-				"left": editor.model.stripe.left + "px",
-				"right": editor.model.stripe.left + "px",
+				"left": editor.model.stripe.left + editor.model.stripe.measure,
+				"right": editor.model.stripe.left + editor.model.stripe.measure,
 				"background-color": editor.model.stripe.color,
 				"height": editor.model.stripe.height+"vh"
 			});
@@ -101,6 +98,10 @@ var editor = {
 		removeStripe: function(){
 			$(".editorStripe").remove();
 		},
+		
+		changeMeasureItems: function(n){
+			editor.model.stripe.measure = n;
+		},
 		/*Stripes end.*/
 		
 		
@@ -108,7 +109,7 @@ var editor = {
 		/*Lines begine.*/
 		drawHorizontalLine: function(){
 			$(".editorBody").append("<div class='editorLineHorizontal'></div>");
-			$(".editorLineHorizontal").draggable({ axis: "y" });//$( "//#draggable" ).draggable({ axis: "y" });
+			$(".editorLineHorizontal").draggable({ axis: "y" });
 		},
 		
 		drawVerticalLine: function(){
@@ -233,7 +234,7 @@ var editor = {
 			$("#drawGrid").on("click", function(){
 				if(!editor.model.grid.exist){
 					$("body").append("<div class='gridHolder'></div>");
-					editor.view.drawGrid();
+					editor.view.reDrawGrid();
 				    $(this).val("Remove grid");
 					editor.model.grid.exist = true;
 				}else{
@@ -286,6 +287,11 @@ var editor = {
 			$("#editorStripeRemove").on("click", function(){
 				editor.view.removeStripe();
 			});
+			
+			$('#editorStripeMeasureForm input').on('change', function() {
+				editor.view.changeMeasureItems($('input[name="editorStripeMeasure"]:checked', '#editorStripeMeasureForm').val());
+				editor.view.reDrawStripe();
+            });
 			/*Stripe end.*/
 			
 			/*Lines begine.*/
@@ -295,7 +301,6 @@ var editor = {
 			
 			$("#drawVerticalLine").on("click", function(){
 				editor.view.drawVerticalLine();
-				//editor.view.ToggleFixLines();
 			});
 			
 			$("#removeAllLines").on("click", function(){
