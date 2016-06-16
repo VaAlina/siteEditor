@@ -23,8 +23,8 @@ var editor = {
 				
 				/*Layers*/
                 $(".editor").append("<hr/><div><h4>Layers <span class='editorview'>[click to colapse]</span></h4>"+
-				                    "<p><input type='text' placeholder='put link to your img here'>"+
-									"<input type='button' value='Add layer' /></p/div>");
+				                    "<p><input type='text' id='editorLayerSrc' placeholder='http://absolute/path/to/img.jpg'>"+
+									"<input type='button' id='editorAddLayer' value='Add layer' /></p></div>");
 				
 				/*Lines*/
                 $(".editor").append("<hr/><div><h4>Lines <span class='editorview'>[click to colapse]</span></h4><p> "+
@@ -121,45 +121,38 @@ var editor = {
 		
 		removeAllLines: function(){
 			$(".editorLineHorizontal, .editorLineVertical").remove();
-		}
+		},
 		/*Lines end.*/
+		
+		/*Layers begine.*/        
+		drawLayer: function(src) {
+			editor.view.removeLayer();
+			$(".editorBody").append("<div class='editorLayer'></div>");
+			$(".editorLayer").append("<img src='"+editor.model.layeR.src+"' />");
+            $(".editorLayer").draggable();
+        },
+
+		removeLayer: function(){
+			$(".editorLayer").remove();
+		}
+		/*Layers end.*/
     },
 
     model: {
         layeR: {
             visible: false,
-            opacity: 1,
-            src: [],
+            opacity: "0.4",
+            src: "wallpaper.jpg",
             position: {
                 x: 0,
                 y: 0
             },
+			exist: false,
             fixed: false,
             size: "normal",
 
             addListeners: function() {
                 //On click "add new layer" - layer.setNewLayer(src)
-            },
-
-            setNewLayer: function(src) {
-                $("body").css("background-image", "url(" + src + ")");
-                $(".editorBody").draggable();
-            },
-
-            changeVisibility: function() {
-
-            },
-            changeOpacity: function() {
-
-            },
-            changePosition: function() {
-
-            },
-            fixLayer: function(layerToFix) {
-
-            },
-            toggleFixed: function() {
-
             },
             setSize: function() {
 
@@ -169,9 +162,6 @@ var editor = {
             },
             zoomIn: function() {
 
-            },
-            setSettingsToDefault: function() {
-
             }
 
         },
@@ -179,23 +169,7 @@ var editor = {
         line: {
             color: "black",
             width: "2px",
-            fixed: false,
-            linesArr: [],
-            changeColor: function() {
-
-            },
-            changeWidth: function() {
-
-            },
-            toggleFixed: function() {
-
-            },
-            addLine: function() {
-
-            },
-            removeLine: function() {
-
-            }
+            fixed: false
         },
 
 
@@ -208,8 +182,9 @@ var editor = {
 		
 		stripe: {
 			height: 100,
-			left: 100, // For both margin-left and margin-right
-			color: "pink"
+			left: 100, // For both margin-left and margin-right.
+			color: "pink",
+			measure: "px"
 		},
 
         ruler: {
@@ -226,32 +201,6 @@ var editor = {
             },
             changeMesureItems: function() {
                 //Reset item to px, cm, pt, %.
-            }
-        },
-
-        dividers: { //dividers.drawCross();
-            add: function() {
-
-            },
-            remove: function() {
-				
-            },
-
-            drawCross: function() { // .resize(redraw);	
-
-            },
-            drawX: function() {
-
-            }
-        },
-
-        img: {
-            currentImg: "",
-            addImg: function() {
-
-            },
-            removeImg: function() {
-
             }
         }
     },
@@ -357,6 +306,30 @@ var editor = {
 			});
 			
 			/*Lines end.*/
+			
+			/*Layers begine.*/
+			$("#editorAddLayer").on("click", function(){
+				editor.view.drawLayer();
+			});
+			
+			$("#editorLayerSrc").on("keyup", function(){
+				editor.model.layeR.src = $("#editorLayerSrc").val();
+				editor.view.drawLayer();
+			});
+			
+			$("#editorAddLayer").on("click", function(){
+				if(!editor.model.layeR.exist){
+				    editor.view.drawLayer();
+				    $(this).val("Remove layer");
+					editor.model.layeR.exist = true;
+				}else{
+					$(this).val("Add layer");
+					editor.model.layeR.exist = false;
+					editor.view.removeLayer();
+				}				
+			});
+
+			/*Layers end.*/
         }
     }
 
