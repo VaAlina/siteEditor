@@ -2,10 +2,7 @@ var editor = {
 
     init: function() {
         editor.view.render();
-        //editor.layeR.setNewLayer("VictoriaLenivFont.png");
-        //editor.view.drawGrid();
-		$(document).ready(
-            function(){
+	    $(document).ready(function(){
                 editor.controller.addListeners();
             }
         );
