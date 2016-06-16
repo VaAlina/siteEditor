@@ -2,7 +2,7 @@ var editor = {
 
     init: function() {
         editor.view.render();
-	    $(document).ready(function(){
+		$(function(){
                 editor.controller.addListeners();
             }
         );
@@ -139,7 +139,7 @@ var editor = {
         layeR: {
             visible: false,
             opacity: "0.4",
-            src: "wallpaper.jpg",
+            src: "lines.png",
             position: {
                 x: 0,
                 y: 0
