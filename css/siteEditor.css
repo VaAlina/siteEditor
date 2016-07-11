@@ -70,3 +70,7 @@ body{
   height: 100vh;
   z-index: 100000 !important;
 }
+
+.editorLayerImg{
+    opacity: 0.5 !important;
+}
