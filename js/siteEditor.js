@@ -126,7 +126,7 @@ var editor = {
 		drawLayer: function(src) {
 			editor.view.removeLayer();
 			$(".editorBody").append("<div class='editorLayer'></div>");
-			$(".editorLayer").append("<img src='"+editor.model.layeR.src+"' />");
+			$(".editorLayer").append("<img src='"+editor.model.layeR.src+"' class='editorLayerImg' />");
             $(".editorLayer").draggable();
         },
 
