@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="siteEditor/css/siteEditor.css">
 
 Стили должны быть подключены в шапке сайта (тег "head"), а скрипты - перед закрывающимся тегом "body". Если всё разместить в шапке сайта, то возникнут проблемы с отрисовкой панели управления программы.
+
 <script src="siteEditor/js/libs/jquery.js"></script>
 <script src="siteEditor/js/libs/jquery_ui_1_11_4.js"></script>
 <script src="siteEditor/js/siteEditor.js"></script>
